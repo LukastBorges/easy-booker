@@ -4,9 +4,7 @@ import MockAdapter from 'axios-mock-adapter'
 import { getHotel, getHotels, patchHotel } from './Hotel'
 
 import { BASE_URL } from 'constants/constants'
-import { mockHotels } from 'core/mocks/Hotel'
-
-const sampleHotel = mockHotels[0]
+import { mockedHotel, mockedHotels } from 'hotels/mocks/hotel'
 
 describe('hotelService', () => {
   const mockAxios = new MockAdapter(axios)
@@ -15,20 +13,22 @@ describe('hotelService', () => {
     const mockHotelId = '123'
     mockAxios
       .onGet(`${BASE_URL}/properties/${mockHotelId}`)
-      .reply(200, sampleHotel)
+      .reply(200, mockedHotel)
 
     const hotel = await getHotel(mockHotelId)
 
-    expect(hotel).toEqual(sampleHotel)
+    expect(hotel).toEqual(mockedHotel)
   })
 
   it('should get hotels', async () => {
     const mockQuery = '?location=NewYork'
-    mockAxios.onGet(`${BASE_URL}/properties${mockQuery}`).reply(200, mockHotels)
+    mockAxios
+      .onGet(`${BASE_URL}/properties${mockQuery}`)
+      .reply(200, mockedHotels)
 
     const hotels = await getHotels(mockQuery)
 
-    expect(hotels).toEqual(mockHotels)
+    expect(hotels).toEqual(mockedHotels)
   })
 
   it('should patch a hotel', async () => {
