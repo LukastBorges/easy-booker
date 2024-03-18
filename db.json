@@ -1,0 +1,249 @@
+{
+  "user": {
+    "id": "b1d61db7-236f-4f41-a1e4-953dd8a92b88",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "John.Doe@test.com"
+  },
+  "properties": [
+    {
+      "id": "b1d61db7-236f-4f41-a1e4-953dd8a92b61",
+      "name": "Sea Breeze Resort",
+      "location": {
+        "country": "United States",
+        "state": "California",
+        "city": "Santa Monica",
+        "address": "123 Ocean View Ave"
+      },
+      "imageUrl": "https://images.pexels.com/photos/2227774/pexels-photo-2227774.jpeg",
+      "description": "Experience the refreshing ocean breeze and luxury accommodations at Sea Breeze Resort in the heart of Santa Monica. With 15 available rooms, indulge in coastal comfort and stunning views.",
+      "rooms": [
+        {
+          "id": "0e33b3c6-288d-4569-bad1-47242959aef2",
+          "name": "Standard Room",
+          "dailyRate": 200,
+          "roomCapacity": 2,
+          "roomsAvailable": 0
+        },
+        {
+          "id": "33e4a750-1999-47db-b442-e4a839098134",
+          "name": "Ocean View Suite",
+          "dailyRate": 400,
+          "roomCapacity": 4,
+          "roomsAvailable": 0
+        }
+      ]
+    },
+    {
+      "id": "63e9b3f7-9f9b-4e45-b3d1-0d303b6f6f27",
+      "name": "Mountain Lodge Retreat",
+      "location": {
+        "country": "Canada",
+        "state": "British Columbia",
+        "city": "Whistler",
+        "address": "456 Pine Tree Rd"
+      },
+      "imageUrl": "https://images.pexels.com/photos/5651729/pexels-photo-5651729.jpeg",
+      "description": "Embrace the serene beauty of the mountains at Mountain Lodge Retreat in Whistler. Nestled among the pines, this retreat offers 20 cozy rooms, perfect for a tranquil escape into nature.",
+      "rooms": [
+        {
+          "id": "33e4a750-1999-47db-b442-e4a750199985",
+          "name": "Luxury Cabin",
+          "dailyRate": 700,
+          "roomCapacity": 4,
+          "roomsAvailable": 2
+        }
+      ]
+    },
+    {
+      "id": "0e33b3c6-288d-4569-bad1-47242959aef2",
+      "name": "Sunset Villa",
+      "location": {
+        "country": "Greece",
+        "state": "Santorini",
+        "city": "Oia",
+        "address": "789 Cliffside Ave"
+      },
+      "imageUrl": "https://images.pexels.com/photos/16898010/pexels-photo-16898010/free-photo-of-view-of-a-resort-with-a-swimming-pool-on-santorini-greece.jpeg",
+      "description": "Experience the enchanting allure of Santorini from the luxurious Sunset Villa. Perched atop the cliffs of Oia, indulge in breathtaking sunsets and elegant accommodations with 10 available rooms.",
+      "rooms": [
+        {
+          "id": "e9f72a71-ecb2-46ad-a208-72a71ecb2b6e",
+          "name": "Oceanfront Suite",
+          "dailyRate": 750,
+          "roomCapacity": 4,
+          "roomsAvailable": 2
+        },
+        {
+          "id": "9b1c8a2d-0c98-4ab1-8b24-1c8a2d0c98f9",
+          "name": "Honeymoon Suite",
+          "dailyRate": 700,
+          "roomCapacity": 2,
+          "roomsAvailable": 3
+        }
+      ]
+    },
+    {
+      "id": "d80bfb02-6b6f-4d69-85ae-30d45f1552bf",
+      "name": "City Lights Hotel",
+      "location": {
+        "country": "Australia",
+        "state": "New South Wales",
+        "city": "Sydney",
+        "address": "101 Downtown St"
+      },
+      "imageUrl": "https://images.pexels.com/photos/11493025/pexels-photo-11493025.jpeg",
+      "description": "Immerse yourself in the vibrant energy of Sydney at City Lights Hotel. Located in the heart of the bustling city, this hotel offers 30 comfortable rooms, providing the perfect base for urban exploration.",
+      "rooms": [
+        {
+          "id": "b134f9e6-1f91-4ed7-b3b3-34f9e61f91e2",
+          "name": "Grand Suite",
+          "dailyRate": 1200,
+          "roomCapacity": 6,
+          "roomsAvailable": 2
+        },
+        {
+          "id": "5e7d1a3e-d611-4c1d-9439-7d1a3ed6114c",
+          "name": "Beachfront Bungalow",
+          "dailyRate": 900,
+          "roomCapacity": 4,
+          "roomsAvailable": 4
+        }
+      ]
+    },
+    {
+      "id": "a155f488-899e-4b9b-9b26-63c8d5c39a7a",
+      "name": "Forest Haven Cabin",
+      "location": {
+        "country": "United States",
+        "state": "Colorado",
+        "city": "Aspen",
+        "address": "321 Woodsy Lane"
+      },
+      "imageUrl": "https://images.pexels.com/photos/2996071/pexels-photo-2996071.jpeg",
+      "description": "Escape to the tranquility of the forest at Forest Haven Cabin in Aspen. Tucked away among the trees, this cozy cabin offers 5 secluded rooms, ideal for reconnecting with nature.",
+      "rooms": [
+        {
+          "id": "f256c8c1-1e7f-4c79-bd0e-56c8c11e7f49",
+          "name": "Standard Room",
+          "dailyRate": 250,
+          "roomCapacity": 2,
+          "roomsAvailable": 8
+        },
+        {
+          "id": "8c69e9cf-0e67-4fe3-9b40-69e9cf0e67de",
+          "name": "Mountain View Chalet",
+          "dailyRate": 500,
+          "roomCapacity": 6,
+          "roomsAvailable": 1
+        }
+      ]
+    },
+    {
+      "id": "4d803a80-689c-4542-a845-bd008cfdf10e",
+      "name": "Lakeside Retreat",
+      "location": {
+        "country": "Canada",
+        "state": "Ontario",
+        "city": "Muskoka",
+        "address": "555 Lakeview Dr"
+      },
+      "imageUrl": "https://images.pexels.com/photos/8389014/pexels-photo-8389014.jpeg",
+      "description": "Unwind by the shimmering waters of Muskoka at Lakeside Retreat. With 12 inviting rooms overlooking the lake, this retreat offers a peaceful getaway surrounded by natural beauty.",
+      "rooms": [
+        {
+          "id": "a3d75c1b-6b51-4ef1-b94f-d75c1b6b51a7",
+          "name": "Standard Room",
+          "dailyRate": 250,
+          "roomCapacity": 2,
+          "roomsAvailable": 4
+        },
+        {
+          "id": "97c80b02-9b3c-4976-8e26-c80b029b3c6e",
+          "name": "Double Deluxe Room",
+          "dailyRate": 500,
+          "roomCapacity": 4,
+          "roomsAvailable": 3
+        }
+      ]
+    },
+    {
+      "id": "74aabbf5-4766-43f3-8541-6d59fe04fd24",
+      "name": "Serenity Beach Resort",
+      "location": {
+        "country": "Thailand",
+        "state": "Phuket",
+        "city": "Patong",
+        "address": "999 Sandy Bay Rd"
+      },
+      "imageUrl": "https://images.pexels.com/photos/13281334/pexels-photo-13281334.jpeg",
+      "description": "Discover blissful relaxation at Serenity Beach Resort in Patong, Phuket. With 25 rooms steps away from the sandy shores, immerse yourself in tranquil beachfront living.",
+      "rooms": [
+        {
+          "id": "c12f5f48-687d-4c76-9e07-2f5f48687d56",
+          "name": "Standard Room",
+          "dailyRate": 300,
+          "roomCapacity": 2,
+          "roomsAvailable": 4
+        },
+        {
+          "id": "3e18aee2-83b2-41d7-9fb8-18aee283b2f5",
+          "name": "Deluxe Suite",
+          "dailyRate": 380,
+          "roomCapacity": 3,
+          "roomsAvailable": 0
+        }
+      ]
+    },
+    {
+      "id": "d0a7bb46-3a4b-4f18-9368-c2e2cbf1f30c",
+      "name": "Urban Oasis Hotel",
+      "location": {
+        "country": "Japan",
+        "state": "Tokyo",
+        "city": "Shibuya",
+        "address": "789 Metropolis Ave"
+      },
+      "imageUrl": "https://images.pexels.com/photos/16412320/pexels-photo-16412320/free-photo-of-kinkaku-temple-by-lake-in-kyoto.jpeg",
+      "description": "Experience the vibrant pulse of Tokyo from the comfort of Urban Oasis Hotel in Shibuya. Offering 18 stylish rooms, this urban retreat provides a serene sanctuary amidst the bustling cityscape.",
+      "rooms": [
+        {
+          "id": "5cf94fa0-8d62-4cb7-9cf4-d94fa08d62ac",
+          "name": "Standard Room",
+          "dailyRate": 300,
+          "roomCapacity": 2,
+          "roomsAvailable": 4
+        },
+        {
+          "id": "b5f3a22e-4d74-43f0-b0af-f3a22e4d74c7",
+          "name": "Master Suite",
+          "dailyRate": 500,
+          "roomCapacity": 6,
+          "roomsAvailable": 1
+        }
+      ]
+    }
+  ],
+  "bookings": [
+    {
+      "id": "00a6",
+      "timestamp": "2024-03-17T22:23:09.979Z",
+      "userId": "b1d61db7-236f-4f41-a1e4-953dd8a92b88",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john.doe@test.com",
+      "location": "United States",
+      "period": [
+        "2024-03-17T22:21:59.436Z",
+        "2024-03-24T22:21:59.436Z"
+      ],
+      "phoneNumber": "+1 (123) 456-7890",
+      "hotelName": "Sunset Villa",
+      "hotelId": "0e33b3c6-288d-4569-bad1-47242959aef2",
+      "roomId": "e9f72a71-ecb2-46ad-a208-72a71ecb2b6e",
+      "roomName": "Oceanfront Suite",
+      "roomDailyRate": 750,
+      "headCount": 1
+    }
+  ]
+}
