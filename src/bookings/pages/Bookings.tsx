@@ -81,6 +81,7 @@ export default function Bookings() {
         className="m-auto drop-shadow-md"
         loading={isLoading}
         pagination={{ position: ['bottomCenter'] }}
+        rowKey={(record) => record.id}
       >
         <Table.Column
           title="Booking date"
