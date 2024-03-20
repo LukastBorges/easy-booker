@@ -21,7 +21,7 @@ export const mockedHotels = [
         roomsAvailable: 1
       },
       {
-        id: '33e4a750-1999-47db-b442-e4a839098134',
+        id: '0e33b3c6-288d-4569-bad1-47242959aef2',
         name: 'Ocean View Suite',
         dailyRate: 400,
         roomCapacity: 4,

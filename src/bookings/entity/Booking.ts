@@ -31,3 +31,7 @@ export type BookingForm = {
   headCount: number
   period: DateStringTuple
 }
+
+export type InitialBookingFormValues = Partial<BookingForm> & {
+  period: DateStringTuple
+}

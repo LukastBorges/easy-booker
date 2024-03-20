@@ -22,7 +22,7 @@ export default function BookingModal() {
   const { hotel, booking, searchParams, dispatch } = useBookingContext()
   const currentBreakpoint = useBreakpoints(widthBreakPoints)
   const currentBookingInfo = booking.id
-    ? booking
+    ? { ...booking, room: { label: booking.roomName, value: booking.roomId } }
     : ({
         headCount: searchParams.headCount,
         period: searchParams.dateRange
@@ -35,7 +35,7 @@ export default function BookingModal() {
     const payload = mapBookingToApi(
       formData,
       hotel,
-      'b1d61db7-236f-4f41-a1e4-953dd8a92b88',
+      'b1d61db7-236f-4f41-a1e4-953dd8a92b88', // Mocked UserID
       booking.id
     )
 
@@ -58,7 +58,6 @@ export default function BookingModal() {
     <Modal
       open={!!hotel.id}
       closeIcon={false}
-      okText="Save"
       footer={[
         <Button key="cancel" onClick={handleCancel} type="default">
           Cancel
@@ -74,6 +73,7 @@ export default function BookingModal() {
       ]}
       width={currentBreakpoint}
       data-cy="booking-modal"
+      destroyOnClose
       centered
     >
       <div className="flex flex-col gap-8 md:flex-row">
@@ -87,13 +87,12 @@ export default function BookingModal() {
           <p>{hotel.description}</p>
         </div>
       </div>
-      {hotel.id && (
-        <BookingFormComponent
-          booking={currentBookingInfo}
-          hotel={hotel}
-          onSubmit={onSubmit}
-        />
-      )}
+      <BookingFormComponent
+        booking={currentBookingInfo}
+        hotel={hotel}
+        initialValues={currentBookingInfo}
+        onSubmit={onSubmit}
+      />
     </Modal>
   )
 }

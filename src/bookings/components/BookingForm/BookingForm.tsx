@@ -4,7 +4,11 @@ import { DatePicker, Form, Input, InputNumber, Layout, Select } from 'antd'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 
-import { Booking, BookingForm } from 'bookings/entity/Booking'
+import {
+  Booking,
+  BookingForm as BookingFormType,
+  InitialBookingFormValues
+} from 'bookings/entity/Booking'
 import {
   getBookingTotalCost,
   getHotelRoomLabel
@@ -14,11 +18,13 @@ import { DateTuple, Option } from 'core/entities/Utils'
 import { Hotel, Room } from 'hotels/entity/Hotel'
 import { findByKey, totalBookingValue } from 'utils/utils'
 import { subscribe, unsubscribe } from 'utils/customEvents'
+import { getTypedDateRange } from 'utils/dateFormatters'
 
 interface BookingFormProps {
   booking: Booking
   hotel: Hotel
-  onSubmit: (formData: BookingForm) => void
+  initialValues: InitialBookingFormValues
+  onSubmit: (formData: BookingFormType) => void
 }
 
 type FormFieldData = {
@@ -29,6 +35,7 @@ type FormFieldData = {
 export default function BookingForm({
   booking,
   hotel,
+  initialValues,
   onSubmit
 }: BookingFormProps) {
   const [form] = Form.useForm()
@@ -57,19 +64,14 @@ export default function BookingForm({
   }
 
   useEffect(() => {
-    const updatedPeriod = booking?.period.map((item) =>
-      dayjs(item)
-    ) as DateTuple
+    const updatedPeriod = booking.period.map((item) => dayjs(item)) as DateTuple
     const selectedRoom = findByKey(hotel.rooms, 'id', booking.roomId)
     const dailyRate = selectedRoom ? selectedRoom.dailyRate : 0
     const totalCost = totalBookingValue(updatedPeriod, dailyRate)
 
     setDailyRate(dailyRate)
     setTotalValue(totalCost)
-
-    form.setFieldValue('period', updatedPeriod)
-    form.setFieldValue('headCount', booking?.headCount)
-  }, [booking.headCount, booking.period, booking.roomId, form, hotel.rooms])
+  }, [booking.period, booking.roomId, hotel.rooms])
 
   useEffect(() => {
     const callback = () => {
@@ -91,9 +93,8 @@ export default function BookingForm({
         form={form}
         onFieldsChange={handleChanges}
         initialValues={{
-          ...booking,
-          period: [],
-          room: { label: booking.roomName, value: booking.roomId }
+          ...initialValues,
+          period: getTypedDateRange(initialValues.period)
         }}
       >
         <Form.Item

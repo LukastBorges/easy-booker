@@ -1,21 +1,32 @@
 import { render, screen } from '@testing-library/react'
 import BookingForm from './BookingForm'
-import { Booking } from 'bookings/entity/Booking'
+import { Booking, InitialBookingFormValues } from 'bookings/entity/Booking'
 import { Hotel } from 'hotels/entity/Hotel'
 import userEvent from '@testing-library/user-event'
-import { mockedBooking } from 'bookings/mocks/Booking'
-import { mockedHotel } from 'hotels/mocks/hotel'
+import { mockedBooking, mockedBookingForm } from 'bookings/mocks/Booking'
+import { mockedHotel, mockedRooms } from 'hotels/mocks/hotel'
+import dayjs from 'dayjs'
+import { getHotelRoomLabel } from 'bookings/presenters/bookingPresenters'
 
 const mockOnSubmit = vi.fn()
 
 describe('<BookingForm />', () => {
-  const setup = (booking: Booking, hotel: Hotel) => {
+  const setup = (
+    booking: Booking,
+    hotel: Hotel,
+    initialValues: InitialBookingFormValues
+  ) => {
     render(
-      <BookingForm booking={booking} hotel={hotel} onSubmit={mockOnSubmit} />
+      <BookingForm
+        booking={booking}
+        hotel={hotel}
+        initialValues={initialValues}
+        onSubmit={mockOnSubmit}
+      />
     )
   }
-  it('renders booking form correctly', async () => {
-    setup(mockedBooking, mockedHotel)
+  it('renders new booking form correctly', async () => {
+    setup(mockedBooking, mockedHotel, { period: mockedBookingForm.period })
 
     // Assert form elements are visible
     const periodInput = screen.getByLabelText('Reservation period')
@@ -37,8 +48,38 @@ describe('<BookingForm />', () => {
     expect(phoneNumberInput).toBeVisible()
   })
 
+  it('renders editing booking form correctly', async () => {
+    setup(mockedBooking, mockedHotel, mockedBookingForm)
+
+    const rangeDate1 = dayjs(mockedBookingForm.period[0]).format('YYYY-MM-DD')
+    const rangeDate2 = dayjs(mockedBookingForm.period[1]).format('YYYY-MM-DD')
+
+    // Assert if input elements ar present
+    const periodInput1 = screen.getByDisplayValue(rangeDate1)
+    const periodInput2 = screen.getByDisplayValue(rangeDate2)
+    const roomInput = screen.getByText(mockedBookingForm.room.label)
+    const headCount = screen.getByDisplayValue(mockedBookingForm.headCount)
+    const firstNameInput = screen.getByDisplayValue(mockedBookingForm.firstName)
+    const lastNameInput = screen.getByDisplayValue(mockedBookingForm.lastName)
+    const emailInput = screen.getByDisplayValue(mockedBookingForm.email)
+    const locationInput = screen.getByDisplayValue(mockedBookingForm.location)
+    const phoneNumberInput = screen.getByDisplayValue(
+      mockedBookingForm.phoneNumber
+    )
+
+    expect(periodInput1).toBeVisible()
+    expect(periodInput2).toBeVisible()
+    expect(roomInput).toBeInTheDocument()
+    expect(headCount).toBeVisible()
+    expect(firstNameInput).toBeVisible()
+    expect(lastNameInput).toBeVisible()
+    expect(emailInput).toBeVisible()
+    expect(locationInput).toBeVisible()
+    expect(phoneNumberInput).toBeVisible()
+  })
+
   it('disables room selection and headcount if editing', async () => {
-    setup(mockedBooking, mockedHotel)
+    setup(mockedBooking, mockedHotel, mockedBookingForm)
 
     const headCountInput = screen.getByLabelText('Headcount')
     const roomSelect = screen.getByTestId('room-select')
@@ -50,7 +91,8 @@ describe('<BookingForm />', () => {
   it('disables room option if headcount is bigger than room capacity', async () => {
     setup(
       { period: mockedBooking.period, headCount: 4 } as Booking,
-      mockedHotel
+      mockedHotel,
+      mockedBookingForm
     )
 
     const roomInput = screen.getByLabelText('Room')
@@ -65,7 +107,8 @@ describe('<BookingForm />', () => {
   it('updates total cost on room change', async () => {
     setup(
       { period: mockedBooking.period, headCount: 2 } as Booking,
-      mockedHotel
+      mockedHotel,
+      { period: mockedBooking.period }
     )
 
     const totalCostElement = await screen.findByText(/Total cost:/i)

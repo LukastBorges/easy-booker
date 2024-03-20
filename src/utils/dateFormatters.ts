@@ -5,6 +5,10 @@ import { dateRangeDuration } from 'utils/utils'
 
 const DEFAULT_FORMAT = 'MM-DD-YYYY'
 
+export function getTypedDateRange(dateRange: DateStringTuple) {
+  return dateRange.map((item) => dayjs(item))
+}
+
 export function dateFormatter(date: string) {
   return dayjs(date).format(DEFAULT_FORMAT)
 }

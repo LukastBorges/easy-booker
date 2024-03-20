@@ -47,7 +47,7 @@ export default function Bookings() {
           key: 'getHotel',
           type: 'error',
           content:
-            'Something went wronh while loading Booking hotel info. Please try again later.'
+            'Something went wrong while loading Booking hotel info. Please try again later.'
         })
       }
     }
@@ -64,7 +64,13 @@ export default function Bookings() {
 
   useEffect(() => {
     !hotel.id && refetch()
-  }, [hotel.id, refetch])
+  }, [dispatch, hotel.id, refetch])
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: 'SET-BOOKING', value: {} })
+    }
+  }, [dispatch])
 
   return (
     <>
