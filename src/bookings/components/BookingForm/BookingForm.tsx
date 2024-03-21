@@ -103,7 +103,7 @@ export default function BookingForm({
           rules={[{ required: true }]}
           className="w-56"
         >
-          <DatePicker.RangePicker size="middle" />
+          <DatePicker.RangePicker size="middle" format="MM/DD/YYYY" />
         </Form.Item>
         <Form.Item
           label="Room"

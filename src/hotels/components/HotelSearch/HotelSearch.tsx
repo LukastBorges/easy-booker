@@ -72,7 +72,7 @@ export default function HotelSearch() {
             initialValue={searchParams.dateRange.map((item) => dayjs(item))}
             className="mb-2"
           >
-            <DatePicker.RangePicker size="large" />
+            <DatePicker.RangePicker size="large" format="MM/DD/YYYY" />
           </Form.Item>
           <Form.Item
             className="mb-2 w-24"

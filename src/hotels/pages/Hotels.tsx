@@ -1,8 +1,9 @@
 import { Layout, Skeleton } from 'antd'
 import { useEffect } from 'react'
 
-import Hotel from 'hotels/components/Hotel/Hotel'
 import { useBookingContext } from 'core/contexts/Bookings'
+import Hotel from 'hotels/components/Hotel/Hotel'
+import HotelSearch from 'hotels/components/HotelSearch/HotelSearch'
 import { Hotel as HotelType } from 'hotels/entity/Hotel'
 import { useGetHotels } from 'hotels/hooks/useHotel'
 
@@ -40,7 +41,6 @@ export default function Hotels() {
   const { isLoading, error, hotels, refetch } = useGetHotels(
     searchParams.location
   )
-
   const selectHotel = (hotel: HotelType) => {
     dispatch({ type: 'SET-HOTEL', value: hotel })
   }
@@ -52,17 +52,20 @@ export default function Hotels() {
   if (error) return 'An error has occurred: ' + error.message
 
   return (
-    <div
-      className="mx-16 my-12 flex flex-wrap justify-center gap-8"
-      data-cy="hotels-container"
-    >
-      {isLoading ? (
-        <SampleLoadingSkeleton />
-      ) : (
-        hotels.map((item) => (
-          <Hotel key={item.id} hotel={item} onClick={selectHotel} />
-        ))
-      )}
-    </div>
+    <Layout.Content>
+      <HotelSearch />
+      <div
+        className="mx-16 my-12 flex flex-wrap justify-center gap-8"
+        data-cy="hotels-container"
+      >
+        {isLoading ? (
+          <SampleLoadingSkeleton />
+        ) : (
+          hotels.map((item) => (
+            <Hotel key={item.id} hotel={item} onClick={selectHotel} />
+          ))
+        )}
+      </div>
+    </Layout.Content>
   )
 }

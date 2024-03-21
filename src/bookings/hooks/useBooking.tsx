@@ -24,15 +24,16 @@ const getRoomsAfterBooked = (rooms: Room[], roomId: string) => {
   })
 }
 
-export function useGetBookings() {
+export function useGetBookings(userId: string) {
+  const query = `?userId=${userId}`
   const {
     isLoading,
     error,
     data = [],
     refetch
   } = useQuery({
-    queryKey: ['getBookings'],
-    queryFn: getBookings
+    queryKey: ['getBookings', query],
+    queryFn: () => getBookings(query)
   })
 
   const bookings = data as Booking[]
@@ -161,4 +162,22 @@ export function useDeleteBooking() {
     error,
     handleDelete
   }
+}
+
+export function useGetReservedPeriods(userId: string) {
+  const query = `?userId=${userId}`
+  const {
+    isLoading,
+    error,
+    data = []
+  } = useQuery({
+    queryKey: ['getBookings', query],
+    queryFn: () => getBookings(query)
+  })
+
+  const bookings = data as Booking[]
+
+  const periods = bookings.map((period) => period.period)
+
+  return { isLoading, error, periods }
 }

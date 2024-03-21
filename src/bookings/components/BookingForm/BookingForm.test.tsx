@@ -51,8 +51,8 @@ describe('<BookingForm />', () => {
   it('renders editing booking form correctly', async () => {
     setup(mockedBooking, mockedHotel, mockedBookingForm)
 
-    const rangeDate1 = dayjs(mockedBookingForm.period[0]).format('YYYY-MM-DD')
-    const rangeDate2 = dayjs(mockedBookingForm.period[1]).format('YYYY-MM-DD')
+    const rangeDate1 = dayjs(mockedBookingForm.period[0]).format('MM/DD/YYYY')
+    const rangeDate2 = dayjs(mockedBookingForm.period[1]).format('MM/DD/YYYY')
 
     // Assert if input elements ar present
     const periodInput1 = screen.getByDisplayValue(rangeDate1)

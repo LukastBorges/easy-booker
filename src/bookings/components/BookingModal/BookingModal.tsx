@@ -1,7 +1,11 @@
 import { Modal, Button } from 'antd'
 
 import BookingFormComponent from 'bookings/components/BookingForm/BookingForm'
-import { REFETCH_HOTELS, RESET_BOOKING_FORM } from 'constants/constants'
+import {
+  REFETCH_HOTELS,
+  RESET_BOOKING_FORM,
+  USER_ID
+} from 'constants/constants'
 import { useBookingContext } from 'core/contexts/Bookings'
 import { Booking, BookingForm } from 'bookings/entity/Booking'
 import { useBreakpoints } from 'core/hooks/useBreakpoints'
@@ -32,12 +36,7 @@ export default function BookingModal() {
   const { handleUpdate } = useUpdateBooking()
 
   const onSubmit = async (formData: BookingForm) => {
-    const payload = mapBookingToApi(
-      formData,
-      hotel,
-      'b1d61db7-236f-4f41-a1e4-953dd8a92b88', // Mocked UserID
-      booking.id
-    )
+    const payload = mapBookingToApi(formData, hotel, USER_ID, booking.id)
 
     if (booking.id) {
       await handleUpdate(payload)

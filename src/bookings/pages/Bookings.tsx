@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Modal, ModalFuncProps, Space, Table, Tooltip } from 'antd'
 import { useEffect } from 'react'
 
-import { ANTD_MESSAGE } from 'constants/constants'
+import { ANTD_MESSAGE, USER_ID } from 'constants/constants'
 import { useBookingContext } from 'core/contexts/Bookings'
 import { Booking } from 'bookings/entity/Booking'
 import { useDeleteBooking, useGetBookings } from 'bookings/hooks/useBooking'
@@ -30,7 +30,7 @@ const DeleteModalConfig: ModalFuncProps = {
 }
 
 export default function Bookings() {
-  const { bookings, isLoading, refetch } = useGetBookings()
+  const { bookings, isLoading, refetch } = useGetBookings(USER_ID)
   const [modal, contextHolder] = Modal.useModal()
   const { hotel, dispatch } = useBookingContext()
   const { handleDelete } = useDeleteBooking()

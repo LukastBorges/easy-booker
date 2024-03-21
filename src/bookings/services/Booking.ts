@@ -21,8 +21,10 @@ export async function updateBooking(booking: BookingPayload): Promise<number> {
   return response.status
 }
 
-export async function getBookings(): Promise<Booking[]> {
-  const response: AxiosResponse = await axios.get(`${BASE_URL}/bookings`)
+export async function getBookings(query: string): Promise<Booking[]> {
+  const response: AxiosResponse = await axios.get(
+    `${BASE_URL}/bookings${query}`
+  )
 
   const data: Booking[] = response.data
 

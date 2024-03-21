@@ -29,9 +29,12 @@ describe('bookingService', () => {
   })
 
   it('should get bookings', async () => {
-    mockAxios.onGet(`${BASE_URL}/bookings`).reply(200, mockedBookings)
+    const mockedQuery = `?userId=${mockedBooking.userId}`
+    mockAxios
+      .onGet(`${BASE_URL}/bookings${mockedQuery}`)
+      .reply(200, mockedBookings)
 
-    const bookings = await getBookings()
+    const bookings = await getBookings(mockedQuery)
 
     expect(bookings).toEqual(mockedBookings)
   })
