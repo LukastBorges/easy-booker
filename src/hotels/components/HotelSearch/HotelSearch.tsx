@@ -15,7 +15,11 @@ import map from 'assets/map.png'
 import LocationSelect from 'core/components/LocationSelect/LocationSelect'
 import { useBookingContext } from 'core/contexts/Bookings'
 import { useBreakpoints } from 'core/hooks/useBreakpoints'
-import { Directions } from 'core/entities/Utils'
+import { DateStringTuple, Directions } from 'core/entities/Utils'
+import { isDateOnAnyRange } from 'utils/dateUtils'
+interface HotelSearchProps {
+  reservedPeriods: DateStringTuple[]
+}
 
 export type SearchForm = {
   location: string
@@ -32,7 +36,7 @@ const directionBreakpoints: Record<Breakpoint, Directions> = {
   xxl: 'horizontal'
 }
 
-export default function HotelSearch() {
+export default function HotelSearch({ reservedPeriods }: HotelSearchProps) {
   const { searchParams, dispatch } = useBookingContext()
   const currentDirection = useBreakpoints(directionBreakpoints)
 
@@ -72,7 +76,11 @@ export default function HotelSearch() {
             initialValue={searchParams.dateRange.map((item) => dayjs(item))}
             className="mb-2"
           >
-            <DatePicker.RangePicker size="large" format="MM/DD/YYYY" />
+            <DatePicker.RangePicker
+              size="large"
+              format="MM/DD/YYYY"
+              disabledDate={(date) => isDateOnAnyRange(date, reservedPeriods)}
+            />
           </Form.Item>
           <Form.Item
             className="mb-2 w-24"

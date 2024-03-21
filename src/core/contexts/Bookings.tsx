@@ -1,6 +1,5 @@
-import dayjs from 'dayjs'
 import {
-  ReactElement,
+  ReactNode,
   createContext,
   useContext,
   useMemo,
@@ -11,12 +10,9 @@ import { Booking } from 'bookings/entity/Booking'
 import { Hotel } from 'hotels/entity/Hotel'
 import { DateStringTuple } from 'core/entities/Utils'
 
-const TODAY = dayjs().toJSON()
-const NEXT_WEEK = dayjs().add(7, 'day').toJSON()
-
 export type SearchParams = {
   location: string | null
-  dateRange: DateStringTuple
+  dateRange: DateStringTuple | []
   headCount: number
 }
 
@@ -24,6 +20,7 @@ export type BookingContextType = {
   hotel: Hotel
   searchParams: SearchParams
   booking: Booking
+  periods: DateStringTuple[]
   dispatch: ({ type, value }: { type: string; value: unknown }) => void
 }
 
@@ -31,10 +28,11 @@ type ReducerState = Omit<BookingContextType, 'dispatch'>
 type ReducerAction =
   | { type: 'SET-HOTEL'; value: Hotel }
   | { type: 'SET-BOOKING'; value: Booking }
+  | { type: 'SET-PERIODS'; value: DateStringTuple[] }
   | { type: 'SET-SEARCH-PARAMS'; value: SearchParams }
 
 interface BookingProviderProps {
-  children: ReactElement
+  children: ReactNode
   initialValue: ReducerState
 }
 
@@ -47,6 +45,8 @@ export const bookingReducer = (
       return { ...state, hotel: action.value }
     case 'SET-BOOKING':
       return { ...state, booking: action.value }
+    case 'SET-PERIODS':
+      return { ...state, periods: action.value }
     case 'SET-SEARCH-PARAMS':
       return { ...state, searchParams: action.value }
     default:
@@ -58,10 +58,11 @@ export const defaultContext: ReducerState = {
   hotel: {} as Hotel,
   searchParams: {
     location: null,
-    dateRange: [TODAY, NEXT_WEEK],
+    dateRange: [],
     headCount: 1
   },
-  booking: {} as Booking
+  booking: {} as Booking,
+  periods: []
 }
 
 export const BookingContext = createContext({} as ReducerState)
@@ -84,6 +85,7 @@ export default function BookingProvider({
       hotel: context.hotel,
       searchParams: context.searchParams,
       booking: context.booking,
+      periods: context.periods,
       dispatch
     }),
     [context, dispatch]

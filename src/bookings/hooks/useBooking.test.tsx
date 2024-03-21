@@ -17,6 +17,7 @@ import {
 } from 'bookings/services/Booking'
 import { mockedBooking } from 'bookings/mocks/Booking'
 import { mockedRooms } from 'hotels/mocks/hotel'
+import BookingProvider, { defaultContext } from 'core/contexts/Bookings'
 
 vi.mock('bookings/services/Booking', () => ({
   getBookings: vi.fn(),
@@ -44,7 +45,9 @@ const queryClient = new QueryClient({
 })
 
 const wrapper = ({ children }: { children: ReactNode }) => (
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  <BookingProvider initialValue={defaultContext}>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  </BookingProvider>
 )
 
 describe('useGetBookings', () => {
@@ -52,7 +55,9 @@ describe('useGetBookings', () => {
     const mockData = [{ id: 'booking1' }, { id: 'booking2' }]
     mockedGetBookings.mockResolvedValueOnce(mockData)
 
-    const { result } = renderHook(() => useGetBookings(), { wrapper })
+    const { result } = renderHook(() => useGetBookings(mockedBooking.userId), {
+      wrapper
+    })
 
     await waitFor(() => expect(result.current.isLoading).toBe(false))
 
@@ -64,7 +69,9 @@ describe('useGetBookings', () => {
   it('rejects get booking', async () => {
     mockedGetBookings.mockRejectedValueOnce(sampleError)
 
-    const { result } = renderHook(() => useGetBookings(), { wrapper })
+    const { result } = renderHook(() => useGetBookings(mockedBooking.userId), {
+      wrapper
+    })
 
     await waitFor(() => expect(result.current.error).toBeTruthy())
 
@@ -79,13 +86,15 @@ describe('useSaveBooking', () => {
 
     const { result } = renderHook(() => useSaveBooking(), { wrapper })
     const newBooking = { ...mockedBooking, id: undefined }
+    const fakeCallback = vi.fn()
 
-    await result.current.handleSave(newBooking, mockedRooms)
+    await result.current.handleSave(newBooking, mockedRooms, fakeCallback)
 
     await waitFor(() => expect(result.current.isPending).toBe(false))
 
     expect(mockedSaveBooking).toHaveBeenLastCalledWith(newBooking)
     expect(result.current.error).toBeNull()
+    expect(fakeCallback).toHaveBeenCalled()
   })
 
   it('rejects save booking', async () => {
@@ -93,12 +102,14 @@ describe('useSaveBooking', () => {
 
     const { result } = renderHook(() => useSaveBooking(), { wrapper })
     const newBooking = { ...mockedBooking, id: undefined }
+    const fakeCallback = vi.fn()
 
-    await result.current.handleSave(newBooking, mockedRooms)
+    await result.current.handleSave(newBooking, mockedRooms, fakeCallback)
     await waitFor(() => expect(result.current.error).toBeTruthy())
 
     expect(result.current.isPending).toBe(false)
     expect(result.current.error).toEqual(sampleError)
+    expect(fakeCallback).not.toHaveBeenCalled()
   })
 })
 
@@ -108,13 +119,15 @@ describe('useUpdateBooking', () => {
 
     const { result } = renderHook(() => useUpdateBooking(), { wrapper })
     const newBooking = { ...mockedBooking, id: undefined }
+    const fakeCallback = vi.fn()
 
-    await result.current.handleUpdate(newBooking)
+    await result.current.handleUpdate(newBooking, fakeCallback)
 
     await waitFor(() => expect(result.current.isPending).toBe(false))
 
     expect(mockedUpdateBooking).toHaveBeenLastCalledWith(newBooking)
     expect(result.current.error).toBeNull()
+    expect(fakeCallback).toHaveBeenCalled()
   })
 
   it('rejects update booking', async () => {
@@ -122,12 +135,14 @@ describe('useUpdateBooking', () => {
 
     const { result } = renderHook(() => useUpdateBooking(), { wrapper })
     const newBooking = { ...mockedBooking, id: undefined }
+    const fakeCallback = vi.fn()
 
-    await result.current.handleUpdate(newBooking)
+    await result.current.handleUpdate(newBooking, fakeCallback)
     await waitFor(() => expect(result.current.error).toBeTruthy())
 
     expect(result.current.isPending).toBe(false)
     expect(result.current.error).toEqual(sampleError)
+    expect(fakeCallback).not.toHaveBeenCalled()
   })
 })
 

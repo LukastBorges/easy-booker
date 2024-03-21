@@ -1,17 +1,14 @@
 import { Modal, Button } from 'antd'
 
 import BookingFormComponent from 'bookings/components/BookingForm/BookingForm'
-import {
-  REFETCH_HOTELS,
-  RESET_BOOKING_FORM,
-  USER_ID
-} from 'constants/constants'
+import { RESET_BOOKING_FORM, USER_ID } from 'constants/constants'
 import { useBookingContext } from 'core/contexts/Bookings'
 import { Booking, BookingForm } from 'bookings/entity/Booking'
 import { useBreakpoints } from 'core/hooks/useBreakpoints'
 import { useSaveBooking, useUpdateBooking } from 'bookings/hooks/useBooking'
 import { mapBookingToApi } from 'bookings/infra/BookingMapper'
 import { publish } from 'utils/customEvents'
+import { useSetPeriods } from 'core/hooks/useReservedPeriod'
 
 const widthBreakPoints = {
   xs: '100vw',
@@ -23,7 +20,10 @@ const widthBreakPoints = {
 }
 
 export default function BookingModal() {
-  const { hotel, booking, searchParams, dispatch } = useBookingContext()
+  const { hotel, booking, searchParams, periods, dispatch } =
+    useBookingContext()
+  useSetPeriods(USER_ID, booking.id)
+
   const currentBreakpoint = useBreakpoints(widthBreakPoints)
   const currentBookingInfo = booking.id
     ? { ...booking, room: { label: booking.roomName, value: booking.roomId } }
@@ -39,13 +39,10 @@ export default function BookingModal() {
     const payload = mapBookingToApi(formData, hotel, USER_ID, booking.id)
 
     if (booking.id) {
-      await handleUpdate(payload)
+      await handleUpdate(payload, handleCancel)
     } else {
-      await handleSave(payload, hotel.rooms)
+      await handleSave(payload, hotel.rooms, handleCancel)
     }
-
-    handleCancel()
-    publish(REFETCH_HOTELS, null)
   }
 
   const handleCancel = () => {
@@ -90,6 +87,7 @@ export default function BookingModal() {
         booking={currentBookingInfo}
         hotel={hotel}
         initialValues={currentBookingInfo}
+        reservedPeriods={periods}
         onSubmit={onSubmit}
       />
     </Modal>

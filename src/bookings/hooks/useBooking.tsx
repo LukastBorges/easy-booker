@@ -1,10 +1,16 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Progress } from 'antd'
 import { useCallback } from 'react'
+import dayjs from 'dayjs'
+import isBetween from 'dayjs/plugin/isBetween'
 
 import { usePatchHotel } from 'hotels/hooks/useHotel'
 
-import { ANTD_MESSAGE } from 'constants/constants'
+import {
+  ANTD_MESSAGE,
+  REFETCH_HOTELS,
+  RESET_PERIODS
+} from 'constants/constants'
 import { Booking, BookingPayload } from 'bookings/entity/Booking'
 import { Room } from 'hotels/entity/Hotel'
 import {
@@ -14,6 +20,8 @@ import {
   deleteBooking
 } from 'bookings/services/Booking'
 import { publish } from 'utils/customEvents'
+import { useBookingContext } from 'core/contexts/Bookings'
+import { isPeriodOverlap } from 'utils/dateUtils'
 
 const getRoomsAfterBooked = (rooms: Room[], roomId: string) => {
   return rooms.map((item) => {
@@ -46,9 +54,10 @@ export function useSaveBooking() {
     mutationFn: saveBooking
   })
   const { handlePatch: patchHotel } = usePatchHotel()
+  const { periods } = useBookingContext()
 
   const handleSave = useCallback(
-    async (booking: BookingPayload, rooms: Room[]) => {
+    async (booking: BookingPayload, rooms: Room[], callback: () => void) => {
       const key = 'bookingSave'
       const roomsReduced = getRoomsAfterBooked(rooms, booking.roomId)
 
@@ -58,6 +67,12 @@ export function useSaveBooking() {
         content: <Progress type="circle" />
       })
       try {
+        const isBookingOverlap = isPeriodOverlap(booking.period, periods)
+
+        if (isBookingOverlap) {
+          throw Error('Reservation period is overlapping with another booking')
+        }
+
         await mutateAsync(booking)
         await patchHotel({
           id: booking.hotelId,
@@ -68,6 +83,9 @@ export function useSaveBooking() {
           type: 'success',
           content: 'Booking saved successfully'
         })
+        publish(REFETCH_HOTELS, null)
+        publish(RESET_PERIODS, null)
+        callback()
       } catch (e) {
         if (e instanceof Error) {
           publish(ANTD_MESSAGE, {
@@ -78,7 +96,7 @@ export function useSaveBooking() {
         }
       }
     },
-    [mutateAsync, patchHotel]
+    [mutateAsync, patchHotel, periods]
   )
 
   return {
@@ -92,9 +110,10 @@ export function useUpdateBooking() {
   const { isPending, error, mutateAsync } = useMutation({
     mutationFn: updateBooking
   })
+  const { periods } = useBookingContext()
 
   const handleUpdate = useCallback(
-    async (booking: BookingPayload) => {
+    async (booking: BookingPayload, callback: () => void) => {
       const key = 'bookingUpdate'
 
       publish(ANTD_MESSAGE, {
@@ -103,12 +122,21 @@ export function useUpdateBooking() {
         content: <Progress type="circle" />
       })
       try {
+        const isBookingOverlap = isPeriodOverlap(booking.period, periods)
+
+        if (isBookingOverlap) {
+          throw Error('Reservation period is overlapping with another booking')
+        }
+
         await mutateAsync(booking)
         publish(ANTD_MESSAGE, {
           key,
           type: 'success',
           content: 'Booking updated successfully'
         })
+        publish(REFETCH_HOTELS, null)
+        publish(RESET_PERIODS, null)
+        callback()
       } catch (e) {
         if (e instanceof Error) {
           publish(ANTD_MESSAGE, {
@@ -119,7 +147,7 @@ export function useUpdateBooking() {
         }
       }
     },
-    [mutateAsync]
+    [mutateAsync, periods]
   )
 
   return {
@@ -144,6 +172,7 @@ export function useDeleteBooking() {
           type: 'success',
           content: 'Booking removed successfully'
         })
+        publish(RESET_PERIODS, null)
       } catch (e) {
         if (e instanceof Error) {
           publish(ANTD_MESSAGE, {
@@ -162,22 +191,4 @@ export function useDeleteBooking() {
     error,
     handleDelete
   }
-}
-
-export function useGetReservedPeriods(userId: string) {
-  const query = `?userId=${userId}`
-  const {
-    isLoading,
-    error,
-    data = []
-  } = useQuery({
-    queryKey: ['getBookings', query],
-    queryFn: () => getBookings(query)
-  })
-
-  const bookings = data as Booking[]
-
-  const periods = bookings.map((period) => period.period)
-
-  return { isLoading, error, periods }
 }

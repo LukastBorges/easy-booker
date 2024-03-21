@@ -57,3 +57,5 @@ export const mockedHotels = [
 export const mockedHotel = mockedHotels[0]
 
 export const mockedRooms = mockedHotel.rooms
+
+export const mockedRoom = mockedHotel.rooms[0]

@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { Hotel } from 'hotels/entity/Hotel'
-import { capitalize } from 'utils/stringFormatters'
+import { capitalize } from 'utils/stringUtils'
 import { getHotels, getHotel, patchHotel } from 'hotels/services/Hotel'
 
 export function useGetHotel(id: string) {

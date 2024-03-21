@@ -37,7 +37,7 @@ const SampleLoadingSkeleton = () => (
 )
 
 export default function Hotels() {
-  const { hotel, searchParams, dispatch } = useBookingContext()
+  const { hotel, searchParams, periods, dispatch } = useBookingContext()
   const { isLoading, error, hotels, refetch } = useGetHotels(
     searchParams.location
   )
@@ -53,7 +53,7 @@ export default function Hotels() {
 
   return (
     <Layout.Content>
-      <HotelSearch />
+      <HotelSearch reservedPeriods={periods} />
       <div
         className="mx-16 my-12 flex flex-wrap justify-center gap-8"
         data-cy="hotels-container"

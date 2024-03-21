@@ -1,12 +1,15 @@
 import { render, screen } from '@testing-library/react'
-import BookingForm from './BookingForm'
-import { Booking, InitialBookingFormValues } from 'bookings/entity/Booking'
-import { Hotel } from 'hotels/entity/Hotel'
 import userEvent from '@testing-library/user-event'
-import { mockedBooking, mockedBookingForm } from 'bookings/mocks/Booking'
-import { mockedHotel, mockedRooms } from 'hotels/mocks/hotel'
 import dayjs from 'dayjs'
-import { getHotelRoomLabel } from 'bookings/presenters/bookingPresenters'
+
+import BookingForm from './BookingForm'
+
+import { Booking, InitialBookingFormValues } from 'bookings/entity/Booking'
+import { mockedBooking, mockedBookingForm } from 'bookings/mocks/Booking'
+import { Hotel } from 'hotels/entity/Hotel'
+import { mockedHotel } from 'hotels/mocks/hotel'
+import { DateStringTuple } from 'core/entities/Utils'
+import { mockedReservedPeriods } from 'core/mocks/ReservedPeriods'
 
 const mockOnSubmit = vi.fn()
 
@@ -14,19 +17,26 @@ describe('<BookingForm />', () => {
   const setup = (
     booking: Booking,
     hotel: Hotel,
-    initialValues: InitialBookingFormValues
+    initialValues: InitialBookingFormValues,
+    periods: DateStringTuple[]
   ) => {
     render(
       <BookingForm
         booking={booking}
         hotel={hotel}
         initialValues={initialValues}
+        reservedPeriods={periods}
         onSubmit={mockOnSubmit}
       />
     )
   }
   it('renders new booking form correctly', async () => {
-    setup(mockedBooking, mockedHotel, { period: mockedBookingForm.period })
+    setup(
+      mockedBooking,
+      mockedHotel,
+      { period: mockedBookingForm.period },
+      mockedReservedPeriods
+    )
 
     // Assert form elements are visible
     const periodInput = screen.getByLabelText('Reservation period')
@@ -49,7 +59,7 @@ describe('<BookingForm />', () => {
   })
 
   it('renders editing booking form correctly', async () => {
-    setup(mockedBooking, mockedHotel, mockedBookingForm)
+    setup(mockedBooking, mockedHotel, mockedBookingForm, mockedReservedPeriods)
 
     const rangeDate1 = dayjs(mockedBookingForm.period[0]).format('MM/DD/YYYY')
     const rangeDate2 = dayjs(mockedBookingForm.period[1]).format('MM/DD/YYYY')
@@ -79,7 +89,7 @@ describe('<BookingForm />', () => {
   })
 
   it('disables room selection and headcount if editing', async () => {
-    setup(mockedBooking, mockedHotel, mockedBookingForm)
+    setup(mockedBooking, mockedHotel, mockedBookingForm, mockedReservedPeriods)
 
     const headCountInput = screen.getByLabelText('Headcount')
     const roomSelect = screen.getByTestId('room-select')
@@ -92,7 +102,8 @@ describe('<BookingForm />', () => {
     setup(
       { period: mockedBooking.period, headCount: 4 } as Booking,
       mockedHotel,
-      mockedBookingForm
+      mockedBookingForm,
+      mockedReservedPeriods
     )
 
     const roomInput = screen.getByLabelText('Room')
@@ -108,7 +119,8 @@ describe('<BookingForm />', () => {
     setup(
       { period: mockedBooking.period, headCount: 2 } as Booking,
       mockedHotel,
-      { period: mockedBooking.period }
+      { period: mockedBooking.period },
+      mockedReservedPeriods
     )
 
     const totalCostElement = await screen.findByText(/Total cost:/i)

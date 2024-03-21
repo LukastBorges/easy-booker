@@ -11,9 +11,9 @@ import {
   dateFormatter,
   dateRangeDurationFormatter,
   dateRangeFormatter
-} from 'utils/dateFormatters'
-import { moneyFormatter } from 'utils/numberFormatters'
-import { fullNameFormatter } from 'utils/stringFormatters'
+} from 'utils/dateUtils'
+import { moneyFormatter } from 'utils/numberUtils'
+import { fullNameFormatter } from 'utils/stringUtils'
 import { getHotel } from 'hotels/services/Hotel'
 import { totalBookingValue } from 'utils/utils'
 import { publish } from 'utils/customEvents'

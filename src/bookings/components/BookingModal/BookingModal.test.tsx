@@ -1,4 +1,6 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, screen } from '@testing-library/react'
+import { ReactNode } from 'react'
 
 import BookingModal from './BookingModal'
 
@@ -6,10 +8,20 @@ import { Booking } from 'bookings/entity/Booking'
 import BookingProvider, { SearchParams } from 'core/contexts/Bookings'
 import { Hotel } from 'hotels/entity/Hotel'
 import { mockedHotel } from 'hotels/mocks/hotel'
+import { DateStringTuple } from 'core/entities/Utils'
+import { mockedReservedPeriods } from 'core/mocks/ReservedPeriods'
 
 vi.mock('bookings/hooks/useBooking', () => ({
   useSaveBooking: vi.fn(() => ({ handleSave: vi.fn() })),
   useUpdateBooking: vi.fn(() => ({ handleUpdate: vi.fn() }))
+}))
+
+vi.mock('core/hooks/useReservedPeriod', () => ({
+  useSetPeriods: vi.fn()
+}))
+
+vi.mock('bookings/services/Booking', () => ({
+  getBooking: vi.fn()
 }))
 
 const mockSearchParams: SearchParams = {
@@ -17,18 +29,31 @@ const mockSearchParams: SearchParams = {
   dateRange: ['2024-05-23T03:00:00.000Z', '2024-06-12T03:00:00.000Z'],
   location: null
 }
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false
+    }
+  }
+})
+
+const wrapper = ({ children }: { children: ReactNode }) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+)
 
 describe('<BookingModal />', () => {
   const setup = (
     hotel: Hotel,
     searchParams: SearchParams,
-    booking: Booking
+    booking: Booking,
+    periods: DateStringTuple[]
   ) => {
     render(
-      <BookingProvider initialValue={{ hotel, searchParams, booking }}>
+      <BookingProvider initialValue={{ hotel, searchParams, booking, periods }}>
         <BookingModal />
       </BookingProvider>
-    )
+    ),
+      { wrapper }
   }
 
   afterAll(() => {
@@ -36,7 +61,7 @@ describe('<BookingModal />', () => {
   })
 
   it('renders hotel name and description', () => {
-    setup(mockedHotel, mockSearchParams, {} as Booking)
+    setup(mockedHotel, mockSearchParams, {} as Booking, mockedReservedPeriods)
 
     expect(screen.getByText(mockedHotel.name)).toBeInTheDocument()
     expect(screen.getByText(mockedHotel.description)).toBeInTheDocument()

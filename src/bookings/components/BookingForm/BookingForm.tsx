@@ -13,17 +13,19 @@ import {
   getBookingTotalCost,
   getHotelRoomLabel
 } from 'bookings/presenters/bookingPresenters'
-import { RESET_BOOKING_FORM } from 'constants/constants'
-import { DateTuple, Option } from 'core/entities/Utils'
+import { RESET_BOOKING_FORM, TODAY, YEAR_FROM_TODAY } from 'constants/constants'
+import { DateStringTuple, DateTuple, Option } from 'core/entities/Utils'
 import { Hotel, Room } from 'hotels/entity/Hotel'
 import { findByKey, totalBookingValue } from 'utils/utils'
 import { subscribe, unsubscribe } from 'utils/customEvents'
-import { getTypedDateRange } from 'utils/dateFormatters'
+import { getTypedDateRange } from 'utils/dateUtils'
+import { isDateOnAnyRange } from 'utils/dateUtils'
 
 interface BookingFormProps {
   booking: Booking
   hotel: Hotel
   initialValues: InitialBookingFormValues
+  reservedPeriods: DateStringTuple[]
   onSubmit: (formData: BookingFormType) => void
 }
 
@@ -36,6 +38,7 @@ export default function BookingForm({
   booking,
   hotel,
   initialValues,
+  reservedPeriods,
   onSubmit
 }: BookingFormProps) {
   const [form] = Form.useForm()
@@ -103,7 +106,14 @@ export default function BookingForm({
           rules={[{ required: true }]}
           className="w-56"
         >
-          <DatePicker.RangePicker size="middle" format="MM/DD/YYYY" />
+          <DatePicker.RangePicker
+            data-cy="range-date-picker"
+            minDate={TODAY}
+            maxDate={YEAR_FROM_TODAY}
+            size="middle"
+            format="MM/DD/YYYY"
+            disabledDate={(date) => isDateOnAnyRange(date, reservedPeriods)}
+          />
         </Form.Item>
         <Form.Item
           label="Room"

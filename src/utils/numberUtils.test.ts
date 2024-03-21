@@ -1,4 +1,4 @@
-import { moneyFormatter } from './numberFormatters'
+import { moneyFormatter } from './numberUtils'
 import { sumListProp } from 'utils/utils'
 
 describe('moneyFormatter', () => {

@@ -1,4 +1,4 @@
-import { fullNameFormatter, capitalize } from './stringFormatters'
+import { fullNameFormatter, capitalize } from './stringUtils'
 
 describe('fullNameFormatter', () => {
   it('formats full name correctly', () => {

@@ -1,10 +1,37 @@
 /// <reference types="cypress" />
 
+import dayjs from 'dayjs'
+
+const TODAY = dayjs().format('YYYY-MM-DD')
+const WEEK_FROM_NOW = dayjs().add(1, 'week').format('YYYY-MM-DD')
+
 describe('Managing bookings', () => {
   it('creates a new booking', () => {
     cy.visit('/')
     cy.get('[data-cy="hotels-container"]')
       .contains('div', 'Lakeside Retreat')
+      .click()
+
+    // Validates required fields
+    cy.contains('Save').click()
+
+    cy.get('div')
+      .contains('Please enter Reservation period')
+      .should('be.visible')
+    cy.get('div').contains('Please enter Room').should('be.visible')
+    cy.get('div').contains('Please enter First name').should('be.visible')
+    cy.get('div').contains('Please enter Last name').should('be.visible')
+    cy.get('div').contains('Please enter Email').should('be.visible')
+    cy.get('div').contains('Please enter Country/Region').should('be.visible')
+    cy.get('div').contains('Please enter Phone number').should('be.visible')
+
+    // Fill date range
+    cy.get('[data-cy="range-date-picker"]')
+      .first()
+      .click()
+      .get(`td[title="${TODAY}"]`)
+      .click()
+      .get(`td[title="${WEEK_FROM_NOW}"]`)
       .click()
 
     // Fill headcount
