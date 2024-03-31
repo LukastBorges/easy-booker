@@ -1,4 +1,4 @@
-import { DateStringTuple } from 'core/entities/Utils'
+import type { DateStringTuple } from 'core/entity/Utils'
 import {
   dateFormatter,
   dateRangeFormatter,

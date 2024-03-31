@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
-import { Booking } from 'bookings/entity/Booking'
+import type { Booking } from 'bookings/entity/Booking'
 import { getBookings } from 'bookings/services/Booking'
 import { ANTD_MESSAGE } from 'constants/constants'
 import { useBookingContext } from 'core/contexts/Bookings'
+import type { DateStringTuple } from 'core/entity/Utils'
 import { publish } from 'utils/customEvents'
-import { DateStringTuple } from 'core/entities/Utils'
 
 export function useSetPeriods(userId: string, bookingId?: string) {
   const { dispatch } = useBookingContext()

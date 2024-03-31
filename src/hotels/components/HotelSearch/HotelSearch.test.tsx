@@ -7,7 +7,7 @@ describe('<Header />', async () => {
   const setup = () => {
     render(
       <BookingProvider initialValue={defaultContext}>
-        <HotelSearch />
+        <HotelSearch reservedPeriods={[]} />
       </BookingProvider>
     )
   }

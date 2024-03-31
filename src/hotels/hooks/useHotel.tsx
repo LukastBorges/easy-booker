@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-import { Hotel } from 'hotels/entity/Hotel'
+import type { Hotel } from 'hotels/entity/Hotel'
 import { capitalize } from 'utils/stringUtils'
 import { getHotels, getHotel, patchHotel } from 'hotels/services/Hotel'
 

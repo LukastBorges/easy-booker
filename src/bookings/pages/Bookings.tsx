@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 
 import { ANTD_MESSAGE, USER_ID } from 'constants/constants'
 import { useBookingContext } from 'core/contexts/Bookings'
-import { Booking } from 'bookings/entity/Booking'
+import type { Booking } from 'bookings/entity/Booking'
 import { useDeleteBooking, useGetBookings } from 'bookings/hooks/useBooking'
 import {
   dateFormatter,

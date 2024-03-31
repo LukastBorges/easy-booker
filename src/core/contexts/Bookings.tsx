@@ -6,9 +6,9 @@ import {
   useReducer
 } from 'react'
 
-import { Booking } from 'bookings/entity/Booking'
-import { Hotel } from 'hotels/entity/Hotel'
-import { DateStringTuple } from 'core/entities/Utils'
+import type { Booking } from 'bookings/entity/Booking'
+import type { Hotel } from 'hotels/entity/Hotel'
+import type { DateStringTuple } from 'core/entity/Utils'
 
 export type SearchParams = {
   location: string | null

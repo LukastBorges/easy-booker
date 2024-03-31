@@ -1,26 +1,23 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Progress } from 'antd'
 import { useCallback } from 'react'
-import dayjs from 'dayjs'
-import isBetween from 'dayjs/plugin/isBetween'
 
-import { usePatchHotel } from 'hotels/hooks/useHotel'
-
-import {
-  ANTD_MESSAGE,
-  REFETCH_HOTELS,
-  RESET_PERIODS
-} from 'constants/constants'
-import { Booking, BookingPayload } from 'bookings/entity/Booking'
-import { Room } from 'hotels/entity/Hotel'
+import type { Booking, BookingPayload } from 'bookings/entity/Booking'
 import {
   saveBooking,
   getBookings,
   updateBooking,
   deleteBooking
 } from 'bookings/services/Booking'
-import { publish } from 'utils/customEvents'
+import {
+  ANTD_MESSAGE,
+  REFETCH_HOTELS,
+  RESET_PERIODS
+} from 'constants/constants'
 import { useBookingContext } from 'core/contexts/Bookings'
+import { usePatchHotel } from 'hotels/hooks/useHotel'
+import type { Room } from 'hotels/entity/Hotel'
+import { publish } from 'utils/customEvents'
 import { isPeriodOverlap } from 'utils/dateUtils'
 
 const getRoomsAfterBooked = (rooms: Room[], roomId: string) => {

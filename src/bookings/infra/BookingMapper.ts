@@ -1,5 +1,5 @@
-import { BookingPayload, BookingForm } from 'bookings/entity/Booking'
-import { Hotel, Room } from 'hotels/entity/Hotel'
+import type { BookingPayload, BookingForm } from 'bookings/entity/Booking'
+import type { Hotel, Room } from 'hotels/entity/Hotel'
 import { findByKey } from 'utils/utils'
 
 export function mapBookingToApi(

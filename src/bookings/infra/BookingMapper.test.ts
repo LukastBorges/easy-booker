@@ -1,5 +1,6 @@
-import { mockedBookingForm } from 'bookings/mocks/Booking'
 import { mapBookingToApi } from './BookingMapper'
+
+import { mockedBookingForm } from 'bookings/mocks/Booking'
 import { mockedHotel } from 'hotels/mocks/hotel'
 
 const userId = 'user123'

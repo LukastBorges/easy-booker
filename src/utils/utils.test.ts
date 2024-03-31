@@ -5,7 +5,7 @@ import {
   totalBookingValue
 } from './utils'
 
-import { DateStringTuple } from 'core/entities/Utils'
+import type { DateStringTuple } from 'core/entity/Utils'
 
 describe('classNames', () => {
   test('returns concatenated string of truthy classes', () => {

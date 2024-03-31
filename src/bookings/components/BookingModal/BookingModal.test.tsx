@@ -4,12 +4,12 @@ import { ReactNode } from 'react'
 
 import BookingModal from './BookingModal'
 
-import { Booking } from 'bookings/entity/Booking'
+import type { Booking } from 'bookings/entity/Booking'
 import BookingProvider, { SearchParams } from 'core/contexts/Bookings'
-import { Hotel } from 'hotels/entity/Hotel'
+import type { Hotel } from 'hotels/entity/Hotel'
 import { mockedHotel } from 'hotels/mocks/hotel'
-import { DateStringTuple } from 'core/entities/Utils'
-import { mockedReservedPeriods } from 'core/mocks/ReservedPeriods'
+import { DateStringTuple } from 'core/entity/Utils'
+import { mockedReservedPeriods } from 'core/mocks/reservedPeriods'
 
 vi.mock('bookings/hooks/useBooking', () => ({
   useSaveBooking: vi.fn(() => ({ handleSave: vi.fn() })),

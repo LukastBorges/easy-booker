@@ -1,4 +1,4 @@
-import { Room } from 'hotels/entity/Hotel'
+import type { Room } from 'hotels/entity/Hotel'
 import { moneyFormatter } from 'utils/numberUtils'
 
 export function getHotelRoomLabel(room: Room) {

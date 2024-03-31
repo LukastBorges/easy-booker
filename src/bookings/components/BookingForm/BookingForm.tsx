@@ -4,7 +4,7 @@ import { DatePicker, Form, Input, InputNumber, Layout, Select } from 'antd'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 
-import {
+import type {
   Booking,
   BookingForm as BookingFormType,
   InitialBookingFormValues
@@ -14,8 +14,8 @@ import {
   getHotelRoomLabel
 } from 'bookings/presenters/bookingPresenters'
 import { RESET_BOOKING_FORM, TODAY, YEAR_FROM_TODAY } from 'constants/constants'
-import { DateStringTuple, DateTuple, Option } from 'core/entities/Utils'
-import { Hotel, Room } from 'hotels/entity/Hotel'
+import { DateStringTuple, DateTuple, Option } from 'core/entity/Utils'
+import type { Hotel, Room } from 'hotels/entity/Hotel'
 import { findByKey, totalBookingValue } from 'utils/utils'
 import { subscribe, unsubscribe } from 'utils/customEvents'
 import { getTypedDateRange } from 'utils/dateUtils'

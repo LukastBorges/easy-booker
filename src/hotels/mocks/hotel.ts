@@ -1,4 +1,6 @@
-export const mockedHotels = [
+import type { Hotel } from 'hotels/entity/Hotel'
+
+export const mockedHotels: Hotel[] = [
   {
     id: 'b1d61db7-236f-4f41-a1e4-953dd8a92b61',
     name: 'Sea Breeze Resort',

@@ -1,6 +1,6 @@
 import { Card } from 'antd'
 
-import { Hotel } from 'hotels/entity/Hotel'
+import type { Hotel } from 'hotels/entity/Hotel'
 import { locationFormatter } from 'hotels/presenters/hotelPresenters'
 import { sumListProp } from 'utils/utils'
 

@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 
 import { BASE_URL } from 'constants/constants'
-import { Booking, BookingPayload } from 'bookings/entity/Booking'
+import type { Booking, BookingPayload } from 'bookings/entity/Booking'
 
 export async function saveBooking(booking: BookingPayload): Promise<number> {
   const response: AxiosResponse = await axios.post(

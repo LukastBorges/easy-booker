@@ -1,4 +1,4 @@
-import { DateStringTuple, Option } from '../../core/entities/Utils'
+import { DateStringTuple, Option } from '../../core/entity/Utils'
 
 export type Booking = {
   id: string

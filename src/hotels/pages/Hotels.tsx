@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useBookingContext } from 'core/contexts/Bookings'
 import Hotel from 'hotels/components/Hotel/Hotel'
 import HotelSearch from 'hotels/components/HotelSearch/HotelSearch'
-import { Hotel as HotelType } from 'hotels/entity/Hotel'
+import type { Hotel as HotelType } from 'hotels/entity/Hotel'
 import { useGetHotels } from 'hotels/hooks/useHotel'
 
 const SampleLoadingSkeleton = () => (

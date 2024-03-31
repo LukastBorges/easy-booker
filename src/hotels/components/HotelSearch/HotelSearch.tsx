@@ -15,7 +15,7 @@ import map from 'assets/map.png'
 import LocationSelect from 'core/components/LocationSelect/LocationSelect'
 import { useBookingContext } from 'core/contexts/Bookings'
 import { useBreakpoints } from 'core/hooks/useBreakpoints'
-import { DateStringTuple, Directions } from 'core/entities/Utils'
+import type { DateStringTuple, Directions } from 'core/entity/Utils'
 import { isDateOnAnyRange } from 'utils/dateUtils'
 interface HotelSearchProps {
   reservedPeriods: DateStringTuple[]

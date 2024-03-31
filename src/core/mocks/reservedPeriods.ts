@@ -1,4 +1,4 @@
-import { DateStringTuple } from 'core/entities/Utils'
+import type { DateStringTuple } from 'core/entity/Utils'
 
 export const mockedReservedPeriods = [
   ['2024-01-01T00:00:00', '2024-01-31T00:00:00'],

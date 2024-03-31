@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs'
 
-import { DateStringTuple, DateTuple } from 'core/entities/Utils'
+import type { DateStringTuple, DateTuple } from 'core/entity/Utils'
 import { dateRangeDuration } from 'utils/utils'
 
 const DEFAULT_FORMAT = 'MM-DD-YYYY'

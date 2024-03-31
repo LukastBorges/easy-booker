@@ -5,12 +5,12 @@ import { Mock } from 'vitest'
 
 import { useSetPeriods } from './useReservedPeriod'
 
-import { mockedHotel } from 'hotels/mocks/hotel'
-import BookingProvider, { defaultContext } from 'core/contexts/Bookings'
 import { getBookings } from 'bookings/services/Booking'
 import { mockedBooking } from 'bookings/mocks/Booking'
-import { publish } from 'utils/customEvents'
 import { ANTD_MESSAGE } from 'constants/constants'
+import BookingProvider, { defaultContext } from 'core/contexts/Bookings'
+import { mockedHotel } from 'hotels/mocks/hotel'
+import { publish } from 'utils/customEvents'
 
 const sampleError = new Error('Network error')
 

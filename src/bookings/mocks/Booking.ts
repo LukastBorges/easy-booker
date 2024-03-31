@@ -1,4 +1,4 @@
-import { Booking, BookingForm } from 'bookings/entity/Booking'
+import type { Booking, BookingForm } from 'bookings/entity/Booking'
 
 export const mockedBooking: Booking = {
   id: '1adc',

@@ -3,9 +3,9 @@ import userEvent from '@testing-library/user-event'
 
 import Hotel from './Hotel'
 
-import { sumListProp } from 'utils/utils'
-import { Hotel as HotelEntity } from 'hotels/entity/Hotel'
+import type { Hotel as HotelEntity } from 'hotels/entity/Hotel'
 import { mockedHotel } from 'hotels/mocks/hotel'
+import { sumListProp } from 'utils/utils'
 
 const mockFn = vi.fn()
 const roomsAvailable = sumListProp(mockedHotel.rooms, 'roomsAvailable')

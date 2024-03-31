@@ -4,12 +4,11 @@ import dayjs from 'dayjs'
 
 import BookingForm from './BookingForm'
 
-import { Booking, InitialBookingFormValues } from 'bookings/entity/Booking'
+import type { Booking, InitialBookingFormValues } from 'bookings/entity/Booking'
 import { mockedBooking, mockedBookingForm } from 'bookings/mocks/Booking'
-import { Hotel } from 'hotels/entity/Hotel'
+import type { Hotel } from 'hotels/entity/Hotel'
 import { mockedHotel } from 'hotels/mocks/hotel'
-import { DateStringTuple } from 'core/entities/Utils'
-import { mockedReservedPeriods } from 'core/mocks/ReservedPeriods'
+import { DateStringTuple } from 'core/entity/Utils'
 
 const mockOnSubmit = vi.fn()
 
@@ -31,12 +30,7 @@ describe('<BookingForm />', () => {
     )
   }
   it('renders new booking form correctly', async () => {
-    setup(
-      mockedBooking,
-      mockedHotel,
-      { period: mockedBookingForm.period },
-      mockedReservedPeriods
-    )
+    setup(mockedBooking, mockedHotel, { period: mockedBookingForm.period }, [])
 
     // Assert form elements are visible
     const periodInput = screen.getByLabelText('Reservation period')
@@ -59,7 +53,7 @@ describe('<BookingForm />', () => {
   })
 
   it('renders editing booking form correctly', async () => {
-    setup(mockedBooking, mockedHotel, mockedBookingForm, mockedReservedPeriods)
+    setup(mockedBooking, mockedHotel, mockedBookingForm, [])
 
     const rangeDate1 = dayjs(mockedBookingForm.period[0]).format('MM/DD/YYYY')
     const rangeDate2 = dayjs(mockedBookingForm.period[1]).format('MM/DD/YYYY')
@@ -89,7 +83,7 @@ describe('<BookingForm />', () => {
   })
 
   it('disables room selection and headcount if editing', async () => {
-    setup(mockedBooking, mockedHotel, mockedBookingForm, mockedReservedPeriods)
+    setup(mockedBooking, mockedHotel, mockedBookingForm, [])
 
     const headCountInput = screen.getByLabelText('Headcount')
     const roomSelect = screen.getByTestId('room-select')
@@ -103,7 +97,7 @@ describe('<BookingForm />', () => {
       { period: mockedBooking.period, headCount: 4 } as Booking,
       mockedHotel,
       mockedBookingForm,
-      mockedReservedPeriods
+      []
     )
 
     const roomInput = screen.getByLabelText('Room')
@@ -120,7 +114,7 @@ describe('<BookingForm />', () => {
       { period: mockedBooking.period, headCount: 2 } as Booking,
       mockedHotel,
       { period: mockedBooking.period },
-      mockedReservedPeriods
+      []
     )
 
     const totalCostElement = await screen.findByText(/Total cost:/i)

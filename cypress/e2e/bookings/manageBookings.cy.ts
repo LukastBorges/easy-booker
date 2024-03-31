@@ -29,9 +29,9 @@ describe('Managing bookings', () => {
     cy.get('[data-cy="range-date-picker"]')
       .first()
       .click()
-      .get(`td[title="${TODAY}"]`)
+      .get(`td[title="${TODAY}"].ant-picker-cell-in-view`)
       .click()
-      .get(`td[title="${WEEK_FROM_NOW}"]`)
+      .get(`td[title="${WEEK_FROM_NOW}"].ant-picker-cell-in-view`)
       .click()
 
     // Fill headcount

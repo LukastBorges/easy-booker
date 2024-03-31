@@ -1,4 +1,4 @@
-import { Hotel, HotelPayload, RawHotel } from 'hotels/entity/Hotel'
+import type { Hotel, HotelPayload, RawHotel } from 'hotels/entity/Hotel'
 
 export function mapHotelToApi(hotel: Partial<Hotel>): Partial<HotelPayload> {
   return {

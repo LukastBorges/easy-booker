@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 
 import { BASE_URL } from 'constants/constants'
-import { Hotel } from 'hotels/entity/Hotel'
+import type { Hotel } from 'hotels/entity/Hotel'
 import { mapApiToHotel } from 'hotels/infra/HotelMapper'
 
 export async function getHotel(id: string): Promise<Hotel> {

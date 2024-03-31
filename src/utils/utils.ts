@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
-import { DateStringTuple, DateTuple } from 'core/entities/Utils'
+
+import type { DateStringTuple, DateTuple } from 'core/entity/Utils'
 
 export function classNames(...classes: unknown[]): string {
   return classes.filter(Boolean).join(' ')
