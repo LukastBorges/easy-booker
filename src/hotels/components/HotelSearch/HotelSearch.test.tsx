@@ -7,7 +7,11 @@ describe('<Header />', async () => {
   const setup = () => {
     render(
       <BookingProvider initialValue={defaultContext}>
-        <HotelSearch reservedPeriods={[]} />
+        <HotelSearch
+          reservedPeriods={[]}
+          searchParams={{ location: '', dateRange: [], headCount: 1 }}
+          dispatch={vi.fn()}
+        />
       </BookingProvider>
     )
   }

@@ -2,7 +2,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { DatePicker, Form, Input, InputNumber, Layout, Select } from 'antd'
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 
 import type {
   Booking,
@@ -34,7 +34,7 @@ type FormFieldData = {
   value?: unknown
 }
 
-export default function BookingForm({
+export default memo(function BookingForm({
   booking,
   hotel,
   initialValues,
@@ -199,4 +199,4 @@ export default function BookingForm({
       </Form>
     </Layout.Content>
   )
-}
+})

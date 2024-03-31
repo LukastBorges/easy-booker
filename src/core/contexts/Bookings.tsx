@@ -24,8 +24,8 @@ export type BookingContextType = {
   dispatch: ({ type, value }: { type: string; value: unknown }) => void
 }
 
-type ReducerState = Omit<BookingContextType, 'dispatch'>
-type ReducerAction =
+export type ReducerState = Omit<BookingContextType, 'dispatch'>
+export type ReducerAction =
   | { type: 'SET-HOTEL'; value: Hotel }
   | { type: 'SET-BOOKING'; value: Booking }
   | { type: 'SET-PERIODS'; value: DateStringTuple[] }

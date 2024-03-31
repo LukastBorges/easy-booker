@@ -10,15 +10,19 @@ import {
   Tooltip
 } from 'antd'
 import dayjs, { Dayjs } from 'dayjs'
+import { Dispatch, memo } from 'react'
 
 import map from 'assets/map.png'
 import LocationSelect from 'core/components/LocationSelect/LocationSelect'
-import { useBookingContext } from 'core/contexts/Bookings'
+import type { ReducerAction, SearchParams } from 'core/contexts/Bookings'
 import { useBreakpoints } from 'core/hooks/useBreakpoints'
 import type { DateStringTuple, Directions } from 'core/entity/Utils'
 import { isDateOnAnyRange } from 'utils/dateUtils'
+
 interface HotelSearchProps {
   reservedPeriods: DateStringTuple[]
+  searchParams: SearchParams
+  dispatch: Dispatch<ReducerAction>
 }
 
 export type SearchForm = {
@@ -36,8 +40,11 @@ const directionBreakpoints: Record<Breakpoint, Directions> = {
   xxl: 'horizontal'
 }
 
-export default function HotelSearch({ reservedPeriods }: HotelSearchProps) {
-  const { searchParams, dispatch } = useBookingContext()
+export default memo(function HotelSearch({
+  reservedPeriods,
+  searchParams,
+  dispatch
+}: HotelSearchProps) {
   const currentDirection = useBreakpoints(directionBreakpoints)
 
   const handleSearch = (formData: SearchForm) => {
@@ -45,7 +52,9 @@ export default function HotelSearch({ reservedPeriods }: HotelSearchProps) {
       type: 'SET-SEARCH-PARAMS',
       value: {
         ...formData,
-        dateRange: formData.dateRange.map((item) => item.toJSON())
+        dateRange: formData.dateRange.map((item) =>
+          item.toJSON()
+        ) as DateStringTuple
       }
     })
   }
@@ -109,4 +118,4 @@ export default function HotelSearch({ reservedPeriods }: HotelSearchProps) {
       </Form>
     </div>
   )
-}
+})

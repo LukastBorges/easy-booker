@@ -53,7 +53,11 @@ export default function Hotels() {
 
   return (
     <Layout.Content>
-      <HotelSearch reservedPeriods={periods} />
+      <HotelSearch
+        reservedPeriods={periods}
+        searchParams={searchParams}
+        dispatch={dispatch}
+      />
       <div
         className="mx-16 my-12 flex flex-wrap justify-center gap-8"
         data-cy="hotels-container"
