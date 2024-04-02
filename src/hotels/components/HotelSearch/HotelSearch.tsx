@@ -14,7 +14,7 @@ import { Dispatch, memo } from 'react'
 
 import map from 'assets/map.png'
 import LocationSelect from 'core/components/LocationSelect/LocationSelect'
-import type { ReducerAction, SearchParams } from 'core/contexts/Bookings'
+import type { BookingAction, SearchParams } from 'core/contexts/Bookings'
 import { useBreakpoints } from 'core/hooks/useBreakpoints'
 import type { DateStringTuple, Directions } from 'core/entity/Utils'
 import { isDateOnAnyRange } from 'utils/dateUtils'
@@ -22,7 +22,7 @@ import { isDateOnAnyRange } from 'utils/dateUtils'
 interface HotelSearchProps {
   reservedPeriods: DateStringTuple[]
   searchParams: SearchParams
-  dispatch: Dispatch<ReducerAction>
+  dispatch: Dispatch<BookingAction>
 }
 
 export type SearchForm = {

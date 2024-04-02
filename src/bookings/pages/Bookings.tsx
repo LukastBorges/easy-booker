@@ -32,7 +32,8 @@ const DeleteModalConfig: ModalFuncProps = {
 export default function Bookings() {
   const { bookings, isLoading, refetch } = useGetBookings(USER_ID)
   const [modal, contextHolder] = Modal.useModal()
-  const { hotel, dispatch } = useBookingContext()
+  const hotelId = useBookingContext((state) => state[0].hotel.id)
+  const dispatch = useBookingContext((state) => state[1])
   const { handleDelete } = useDeleteBooking()
 
   const handleEdit = async (booking: Booking) => {
@@ -63,12 +64,12 @@ export default function Bookings() {
   }
 
   useEffect(() => {
-    !hotel.id && refetch()
-  }, [dispatch, hotel.id, refetch])
+    !hotelId && refetch()
+  }, [hotelId, refetch])
 
   useEffect(() => {
     return () => {
-      dispatch({ type: 'SET-BOOKING', value: {} })
+      dispatch({ type: 'SET-BOOKING', value: {} as Booking })
     }
   }, [dispatch])
 

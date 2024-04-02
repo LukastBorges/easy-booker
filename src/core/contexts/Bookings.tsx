@@ -1,45 +1,33 @@
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useMemo,
-  useReducer
-} from 'react'
+import { ReactNode, useReducer } from 'react'
+import { createContext, useContextSelector } from 'use-context-selector'
 
 import type { Booking } from 'bookings/entity/Booking'
 import type { Hotel } from 'hotels/entity/Hotel'
 import type { DateStringTuple } from 'core/entity/Utils'
 
-export type SearchParams = {
-  location: string | null
-  dateRange: DateStringTuple | []
-  headCount: number
-}
-
-export type BookingContextType = {
+export type BookingState = {
   hotel: Hotel
   searchParams: SearchParams
   booking: Booking
   periods: DateStringTuple[]
-  dispatch: ({ type, value }: { type: string; value: unknown }) => void
 }
 
-export type ReducerState = Omit<BookingContextType, 'dispatch'>
-export type ReducerAction =
+export type SearchParams = {
+  location: string
+  dateRange: DateStringTuple | never[]
+  headCount: number
+}
+
+export type BookingAction =
   | { type: 'SET-HOTEL'; value: Hotel }
   | { type: 'SET-BOOKING'; value: Booking }
   | { type: 'SET-PERIODS'; value: DateStringTuple[] }
   | { type: 'SET-SEARCH-PARAMS'; value: SearchParams }
 
-interface BookingProviderProps {
-  children: ReactNode
-  initialValue: ReducerState
-}
-
 export const bookingReducer = (
-  state: ReducerState,
-  action: ReducerAction
-): ReducerState => {
+  state: BookingState,
+  action: BookingAction
+): BookingState => {
   switch (action.type) {
     case 'SET-HOTEL':
       return { ...state, hotel: action.value }
@@ -54,45 +42,48 @@ export const bookingReducer = (
   }
 }
 
-export const defaultContext: ReducerState = {
+export type BookingDispatch = (action: BookingAction) => void
+
+const initialValue: BookingState = {
   hotel: {} as Hotel,
   searchParams: {
-    location: null,
+    location: '',
     dateRange: [],
     headCount: 1
   },
   booking: {} as Booking,
-  periods: []
+  periods: [] as DateStringTuple[]
 }
 
-export const BookingContext = createContext({} as ReducerState)
+export const BookingContext = createContext<[BookingState, BookingDispatch]>([
+  initialValue,
+  () => null
+])
 
 BookingContext.displayName = 'BookingContext'
 
-export function useBookingContext() {
-  const context = useContext(BookingContext)
+type BookingSelector<T> = (state: [BookingState, BookingDispatch]) => T
 
-  return context as BookingContextType
+export function useBookingContext<T>(selector: BookingSelector<T>) {
+  return useContextSelector(BookingContext, selector)
+}
+
+interface BookingProviderProps {
+  children: ReactNode
+  defaultValue?: BookingState
 }
 
 export default function BookingProvider({
   children,
-  initialValue
+  defaultValue
 }: BookingProviderProps) {
-  const [context, dispatch] = useReducer(bookingReducer, initialValue)
-  const contextValue = useMemo(
-    () => ({
-      hotel: context.hotel,
-      searchParams: context.searchParams,
-      booking: context.booking,
-      periods: context.periods,
-      dispatch
-    }),
-    [context, dispatch]
+  const [state, dispatch] = useReducer(
+    bookingReducer,
+    defaultValue || initialValue
   )
 
   return (
-    <BookingContext.Provider value={contextValue}>
+    <BookingContext.Provider value={[state, dispatch]}>
       {children}
     </BookingContext.Provider>
   )

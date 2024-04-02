@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client'
 import 'tailwindcss/tailwind.css'
 
 import App from 'core/components/App'
-import BookingProvider, { defaultContext } from 'core/contexts/Bookings'
+import BookingProvider from 'core/contexts/Bookings'
 
 dayjs.extend(isBetween)
 
@@ -18,7 +18,7 @@ const queryClient = new QueryClient()
 root.render(
   <Alert.ErrorBoundary>
     <QueryClientProvider client={queryClient}>
-      <BookingProvider initialValue={defaultContext}>
+      <BookingProvider>
         <ConfigProvider
           theme={{
             token: {

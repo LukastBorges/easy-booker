@@ -9,7 +9,7 @@ import type { DateStringTuple } from 'core/entity/Utils'
 import { publish } from 'utils/customEvents'
 
 export function useSetPeriods(userId: string, bookingId?: string) {
-  const { dispatch } = useBookingContext()
+  const dispatch = useBookingContext((state) => state[1])
   const query = `?userId=${userId}`
   const {
     error,

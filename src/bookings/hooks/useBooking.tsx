@@ -51,7 +51,7 @@ export function useSaveBooking() {
     mutationFn: saveBooking
   })
   const { handlePatch: patchHotel } = usePatchHotel()
-  const { periods } = useBookingContext()
+  const periods = useBookingContext((state) => state[0].periods)
 
   const handleSave = useCallback(
     async (booking: BookingPayload, rooms: Room[], callback: () => void) => {
@@ -107,7 +107,7 @@ export function useUpdateBooking() {
   const { isPending, error, mutateAsync } = useMutation({
     mutationFn: updateBooking
   })
-  const { periods } = useBookingContext()
+  const periods = useBookingContext((state) => state[0].periods)
 
   const handleUpdate = useCallback(
     async (booking: BookingPayload, callback: () => void) => {

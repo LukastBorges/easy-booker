@@ -8,7 +8,7 @@ import { useSetPeriods } from './useReservedPeriod'
 import { getBookings } from 'bookings/services/Booking'
 import { mockedBooking } from 'bookings/mocks/Booking'
 import { ANTD_MESSAGE } from 'constants/constants'
-import BookingProvider, { defaultContext } from 'core/contexts/Bookings'
+import BookingProvider from 'core/contexts/Bookings'
 import { mockedHotel } from 'hotels/mocks/hotel'
 import { publish } from 'utils/customEvents'
 
@@ -33,7 +33,7 @@ const queryClient = new QueryClient({
   }
 })
 const wrapper = ({ children }: { children: ReactNode }) => (
-  <BookingProvider initialValue={defaultContext}>
+  <BookingProvider>
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   </BookingProvider>
 )

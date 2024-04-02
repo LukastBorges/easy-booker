@@ -37,7 +37,10 @@ const SampleLoadingSkeleton = () => (
 )
 
 export default function Hotels() {
-  const { hotel, searchParams, periods, dispatch } = useBookingContext()
+  const hotelId = useBookingContext((state) => state[0].hotel.id)
+  const searchParams = useBookingContext((state) => state[0].searchParams)
+  const periods = useBookingContext((state) => state[0].periods)
+  const dispatch = useBookingContext((state) => state[1])
   const { isLoading, error, hotels, refetch } = useGetHotels(
     searchParams.location
   )
@@ -46,8 +49,8 @@ export default function Hotels() {
   }
 
   useEffect(() => {
-    !hotel.id && refetch()
-  }, [hotel.id, refetch])
+    !hotelId && refetch()
+  }, [hotelId, refetch])
 
   if (error) return 'An error has occurred: ' + error.message
 

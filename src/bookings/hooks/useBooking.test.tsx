@@ -17,7 +17,7 @@ import {
 } from 'bookings/services/Booking'
 import { mockedBooking } from 'bookings/mocks/Booking'
 import { mockedRooms } from 'hotels/mocks/hotel'
-import BookingProvider, { defaultContext } from 'core/contexts/Bookings'
+import BookingProvider from 'core/contexts/Bookings'
 
 vi.mock('bookings/services/Booking', () => ({
   getBookings: vi.fn(),
@@ -45,7 +45,7 @@ const queryClient = new QueryClient({
 })
 
 const wrapper = ({ children }: { children: ReactNode }) => (
-  <BookingProvider initialValue={defaultContext}>
+  <BookingProvider>
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   </BookingProvider>
 )

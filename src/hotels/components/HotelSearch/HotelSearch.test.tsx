@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react'
 
 import HotelSearch from './HotelSearch'
-import BookingProvider, { defaultContext } from 'core/contexts/Bookings'
+import BookingProvider from 'core/contexts/Bookings'
 
 describe('<Header />', async () => {
   const setup = () => {
     render(
-      <BookingProvider initialValue={defaultContext}>
+      <BookingProvider>
         <HotelSearch
           reservedPeriods={[]}
           searchParams={{ location: '', dateRange: [], headCount: 1 }}

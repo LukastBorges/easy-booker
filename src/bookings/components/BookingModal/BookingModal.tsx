@@ -1,14 +1,15 @@
 import { Modal, Button } from 'antd'
 
 import BookingFormComponent from 'bookings/components/BookingForm/BookingForm'
-import { RESET_BOOKING_FORM, USER_ID } from 'constants/constants'
-import { useBookingContext } from 'core/contexts/Bookings'
 import type { Booking, BookingForm } from 'bookings/entity/Booking'
-import { useBreakpoints } from 'core/hooks/useBreakpoints'
 import { useSaveBooking, useUpdateBooking } from 'bookings/hooks/useBooking'
 import { mapBookingToApi } from 'bookings/infra/BookingMapper'
-import { publish } from 'utils/customEvents'
+import { RESET_BOOKING_FORM, USER_ID } from 'constants/constants'
+import { useBookingContext } from 'core/contexts/Bookings'
+import { useBreakpoints } from 'core/hooks/useBreakpoints'
 import { useSetPeriods } from 'core/hooks/useReservedPeriod'
+import type { Hotel } from 'hotels/entity/Hotel'
+import { publish } from 'utils/customEvents'
 
 const widthBreakPoints = {
   xs: '100vw',
@@ -20,20 +21,21 @@ const widthBreakPoints = {
 }
 
 export default function BookingModal() {
-  const { hotel, booking, searchParams, periods, dispatch } =
-    useBookingContext()
+  const { hotel, booking, searchParams, periods } = useBookingContext(
+    (state) => state[0]
+  )
+  const dispatch = useBookingContext((state) => state[1])
   useSetPeriods(USER_ID, booking.id)
-
   const currentBreakpoint = useBreakpoints(widthBreakPoints)
+  const { handleSave } = useSaveBooking()
+  const { handleUpdate } = useUpdateBooking()
+
   const currentBookingInfo = booking.id
     ? { ...booking, room: { label: booking.roomName, value: booking.roomId } }
     : ({
         headCount: searchParams.headCount,
         period: searchParams.dateRange
       } as Booking)
-
-  const { handleSave } = useSaveBooking()
-  const { handleUpdate } = useUpdateBooking()
 
   const onSubmit = async (formData: BookingForm) => {
     const payload = mapBookingToApi(formData, hotel, USER_ID, booking.id)
@@ -46,7 +48,7 @@ export default function BookingModal() {
   }
 
   const handleCancel = () => {
-    dispatch({ type: 'SET-HOTEL', value: {} })
+    dispatch({ type: 'SET-HOTEL', value: {} as Hotel })
     publish(RESET_BOOKING_FORM, null)
   }
 

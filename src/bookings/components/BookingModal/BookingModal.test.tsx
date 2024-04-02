@@ -27,7 +27,7 @@ vi.mock('bookings/services/Booking', () => ({
 const mockSearchParams: SearchParams = {
   headCount: 2,
   dateRange: ['2024-05-23T03:00:00.000Z', '2024-06-12T03:00:00.000Z'],
-  location: null
+  location: ''
 }
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,7 +49,7 @@ describe('<BookingModal />', () => {
     periods: DateStringTuple[]
   ) => {
     render(
-      <BookingProvider initialValue={{ hotel, searchParams, booking, periods }}>
+      <BookingProvider defaultValue={{ hotel, searchParams, booking, periods }}>
         <BookingModal />
       </BookingProvider>
     ),
