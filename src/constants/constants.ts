@@ -12,7 +12,6 @@ export const SAVE_BOOKING = 'save-booking'
 export const UPDATE_BOOKING = 'update-booking'
 export const DELETE_BOOKING = 'delete-booking'
 
-export const RESET_BOOKING_FORM = 'reset-booking'
 export const RESET_PERIODS = 'reset-periods'
 
 // Mocked userId since login feature are not implemented at this moment

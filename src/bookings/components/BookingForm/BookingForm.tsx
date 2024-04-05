@@ -13,11 +13,10 @@ import {
   getBookingTotalCost,
   getHotelRoomLabel
 } from 'bookings/presenters/bookingPresenters'
-import { RESET_BOOKING_FORM, TODAY, YEAR_FROM_TODAY } from 'constants/constants'
+import { TODAY, YEAR_FROM_TODAY } from 'constants/constants'
 import { DateStringTuple, DateTuple, Option } from 'core/entity/Utils'
 import type { Hotel, Room } from 'hotels/entity/Hotel'
 import { findByKey, totalBookingValue } from 'utils/utils'
-import { subscribe, unsubscribe } from 'utils/customEvents'
 import { getTypedDateRange } from 'utils/dateUtils'
 import { isDateOnAnyRange } from 'utils/dateUtils'
 
@@ -42,7 +41,7 @@ export default memo(function BookingForm({
   onSubmit
 }: BookingFormProps) {
   const [form] = Form.useForm()
-  const [headCount, setHeadCount] = useState(booking?.headCount || 0)
+  const [headCount, setHeadCount] = useState(booking.headCount || 0)
   const [dailyRate, setDailyRate] = useState(0)
   const [totalValue, setTotalValue] = useState(0)
   const isUpdate = !!booking.id
@@ -75,16 +74,6 @@ export default memo(function BookingForm({
     setDailyRate(dailyRate)
     setTotalValue(totalCost)
   }, [booking.period, booking.roomId, hotel.rooms])
-
-  useEffect(() => {
-    const callback = () => {
-      form.resetFields()
-    }
-
-    subscribe(RESET_BOOKING_FORM, callback)
-
-    return () => unsubscribe(RESET_BOOKING_FORM, callback)
-  }, [form])
 
   return (
     <Layout.Content>

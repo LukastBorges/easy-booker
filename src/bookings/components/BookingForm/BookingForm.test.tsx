@@ -58,7 +58,7 @@ describe('<BookingForm />', () => {
     const rangeDate1 = dayjs(mockedBookingForm.period[0]).format('MM/DD/YYYY')
     const rangeDate2 = dayjs(mockedBookingForm.period[1]).format('MM/DD/YYYY')
 
-    // Assert if input elements ar present
+    // Assert if input elements are present
     const periodInput1 = screen.getByDisplayValue(rangeDate1)
     const periodInput2 = screen.getByDisplayValue(rangeDate2)
     const roomInput = screen.getByText(mockedBookingForm.room.label)
@@ -104,9 +104,11 @@ describe('<BookingForm />', () => {
 
     await userEvent.click(roomInput)
 
-    const option = await screen.findByText(/Standard Room/i)
+    const option = await screen.findByTitle(
+      'Standard Room (2 people, $200/day)'
+    )
 
-    expect(option.parentElement).toHaveClass('ant-select-item-option-disabled')
+    expect(option).toHaveClass('ant-select-item-option-disabled')
   })
 
   it('updates total cost on room change', async () => {

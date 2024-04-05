@@ -1,13 +1,12 @@
 import { Modal, Button } from 'antd'
 
 import BookingFormComponent from 'bookings/components/BookingForm/BookingForm'
-import { RESET_BOOKING_FORM, USER_ID } from 'constants/constants'
+import { USER_ID } from 'constants/constants'
 import { useBookingContext } from 'core/contexts/Bookings'
 import type { Booking, BookingForm } from 'bookings/entity/Booking'
 import { useBreakpoints } from 'core/hooks/useBreakpoints'
 import { useSaveBooking, useUpdateBooking } from 'bookings/hooks/useBooking'
 import { mapBookingToApi } from 'bookings/infra/BookingMapper'
-import { publish } from 'utils/customEvents'
 import { useSetPeriods } from 'core/hooks/useReservedPeriod'
 
 const widthBreakPoints = {
@@ -47,7 +46,6 @@ export default function BookingModal() {
 
   const handleCancel = () => {
     dispatch({ type: 'SET-HOTEL', value: {} })
-    publish(RESET_BOOKING_FORM, null)
   }
 
   return (
